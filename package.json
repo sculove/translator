@@ -1,0 +1,41 @@
+{
+    "name": "translator",
+    "displayName": "translator",
+    "description": "",
+    "version": "0.0.1",
+    "publisher": "sculove",
+    "engines": {
+        "vscode": "^1.18.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.translateToKor"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.translateToKor",
+                "title": "Transform to Korean"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.44",
+        "@types/node": "^8.0.53",
+        "typescript": "^2.6.2",
+        "vscode": "^1.1.8"
+    },
+    "dependencies": {
+        "isomorphic-fetch": "^2.2.1"
+    }
+}
