@@ -6,21 +6,22 @@ import {
     ExtensionContext,
     TextDocument,
     Range,
+    workspace,
     window,
-} from 'vscode';
+    QuickPickItem,
+} from "vscode";
+import {Observable} from "rxjs/Observable";
+import {pipe} from "rxjs/Rx";
+import { from } from "rxjs/observable/from";
+import { filter, map, mergeMap } from "rxjs/operators";
+import {Translator, TranslatorResult} from "./translator";
+
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
-
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "translator" is now active!');
-
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = commands.registerCommand('extension.translateToKor', () => {
+    const translator = new Translator();
+    const disposable = commands.registerCommand('extension.translateToKor', () => {
         const editor = vswindow.activeTextEditor;
         if (!editor) {
             vswindow.showInformationMessage('Open a file first to manipulate text selections');
@@ -28,36 +29,29 @@ export function activate(context: ExtensionContext) {
         }
         const selections = editor.selections;
         const doc = editor.document;
-        selections.forEach(selection => {
+
+        selections.forEach(async selection => {
             const text = doc.getText(new Range(selection.start, selection.end));
-    
-            //@ api를 콜해서. 번역결과를 보여주는 창이 필요.
-            const headers = new Headers({
-                "Content-Type": "application/x-www-form-urlencoded",
-                'X-Naver-Client-Id': "",
-                'X-Naver-Client-Secret': ""
-            });
-    
-            console.log("fetch", fetch);
-            const param: RequestInit = {
-                method: 'GET',
-                headers,
-                body: {
-                    "source": 'ko',
-                    "target": 'en',
-                    "text": text
-                }
-            };
-            fetch("https://openapi.naver.com/v1/papago/n2mt", param).then(res => {
-                console.log(res);
-            }).catch(e => {
-                console.error(e);
-            });
-            console.log(text);
+            if (text) {
+                translator.get(text).subscribe((v: TranslatorResult) => {
+                    window.showQuickPick(v.itemList, {
+                        matchOnDescription: true, 
+                        placeHolder: "변경하고 싶은 단어.문장을 고르세요"
+                    }).then((item: QuickPickItem) => {
+                        if (item) {
+                            editor.edit(function (edit) {
+                                edit.replace(selection, item.label);
+                            })
+                        }
+                    });
+                })
+            }
         });
-        
-        vswindow.showInformationMessage('Hello World!');
     });
+
+
+    
+
     context.subscriptions.push(disposable);
 }
 
