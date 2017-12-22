@@ -67,54 +67,61 @@
                         "default": [
                             {
                                 "prefix": "get",
-                                "description": "반환한다",
+                                "description": "반환한다.",
                                 "antonymPrefix": "set"
                             }, {
                                 "prefix": "set",
-                                "description": "설정한다",
+                                "description": "설정한다.",
                                 "antonymPrefix": "get"
                             }, {
                                 "prefix": "update",
-                                "description": "최신으로 바꾼다"
+                                "description": "바꾸다.",
+                                "detail": "최신으로 바꾼다"
                             }, {
                                 "prefix": "change",
-                                "description": "바꾸다, 변하다",
-                                "detail": "어떤 것을 다른 것으로 바꾸거나, 성질·성격을 근본적으로 변화시킨다"
+                                "description": "바꾸다, 변하다.",
+                                "detail": "어떤 것을 다른 것으로 바꾸거나, 성질·성격을 근본적으로 변화시킨다."
                             }, {
                                 "prefix": "alter",
-                                "description": "바꾸다, 고치다, 수정하다",
-                                "detail": "근본적인 변화가 아니라, 모양이나 세부사항을 바꾼다"
+                                "description": "바꾸다, 고치다, 수정하다.",
+                                "detail": "근본적인 변화가 아니라, 모양이나 세부사항을 바꾼다."
                             }, {
                                 "prefix": "modify",
-                                "description": "바꾸다, 수정하다",
-                                "detail": "어떤 것에 맞추어서 바꾼다"
+                                "description": "바꾸다, 수정하다.",
+                                "detail": "어떤 것에 맞추어서 바꾼다."
                             }, {
                                 "prefix": "add",
-                                "description": "첨가하다, 덧붙이다"
+                                "description": "첨가하다, 덧붙이다."
                             }, {
                                 "prefix": "insert",
-                                "description": "끼워 넣다",
-                                "detail": "다른 것 속에, 둘 사이에 끼워 넣다"
+                                "description": "끼워 넣다.",
+                                "detail": "다른 것 속에, 둘 사이에 끼워 넣다."
                             }, {
                                 "prefix": "remove",
                                 "description": "제거한다",
-                                "detail": "원래 위치에서는 없어지지만 어딘가 남아있다"
+                                "detail": "원래 위치에서는 없어지지만 어딘가 남아있다."
                             }, {
                                 "prefix": "delete",
-                                "description": "삭제한다",
-                                "detail": "완전히 없어진다"
+                                "description": "삭제한다.",
+                                "detail": "완전히 없어진다."
+                            }, {
+                                "prefix": "is",
+                                "description": "예/아니오. boolean 타입"
+                            }, {
+                                "prefix": "has",
+                                "description": "있다/없다. boolean 타입"
                             }, {
                                 "prefix": "create",
                                 "description": "생성한다",
-                                "detail": "기존에 없던 것을 창조한다",
+                                "detail": "기존에 없던 것을 창조한다.",
                                 "antonymPrefix": "destroy"
                             }, {
                                 "prefix": "make",
                                 "description": "생성한다 ",
-                                "detail": "기존에 있던 것에서 부가 자료를 생성한다"
+                                "detail": "기존에 있던 것에서 부가 자료를 생성한다."
                             }, {
                                 "prefix": "destroy",
-                                "description": "파괴한다. 자원을 해제한다",
+                                "description": "파괴한다. 자원을 해제한다.",
                                 "antonymPrefix": "create"
                             }
                         ]

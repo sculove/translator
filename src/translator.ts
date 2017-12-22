@@ -8,7 +8,7 @@ import {
   window,
   QuickPickItem,
 } from 'vscode';
-import { josa, getJosaPicker, makeJosaify } from 'josa'
+import { josa } from 'josa'
 import {Observable} from "rxjs/Observable";
 import {pipe} from "rxjs/Rx";
 import { from } from "rxjs/observable/from";
@@ -31,27 +31,33 @@ export interface TranslatrRule {
 export class Translator {
   public get(text: string): Observable<TranslatorResult> {
     const config = workspace.getConfiguration("translator");
-    console.log(config);
     switch(config.type) {
       default: 
         return this.getNaverAPI(text, config);  
     }
   }
-  private getItemList(text: string, translatedText: string, config): QuickPickItem[] {
-    const result = [{
+  private getItemList(text: string, translatedText: string, config, isAddPrefixList): QuickPickItem[] {
+    const list = [{
         label: translatedText,
         description: text,
         detail: `Convert '${text}' to '${translatedText}'`,
     }]
-    return result.concat(config.rules.map((rule:TranslatrRule) => {
-      const item = {
-        label: `${rule.prefix}${translatedText}`,
-        description: josa(`${text.trim()}#{을} ${rule.description}`),
-        detail: rule.detail || "",
-      };
-      item.detail += rule.antonymPrefix ? `${item.detail ? " " : ""}반대말은 '${rule.antonymPrefix}${translatedText}'` : "";
-      return item;
-    ));
+
+    if (isAddPrefixList) {
+      return list.concat(
+        config.rules.map((rule:TranslatrRule) => {
+          const item = {
+            label: `${rule.prefix}${translatedText}`,
+            description: josa(`${text.trim()}#{을} ${rule.description}`),
+            detail: rule.detail || "",
+          };
+          item.detail += rule.antonymPrefix ? `${item.detail ? " " : ""}[반대말] '${rule.antonymPrefix}${translatedText}'` : "";
+          return item;
+        )
+      );
+    } else {
+      return list;
+    }
   }
   private getNaverAPI(text: string, config): Observable<TranslatorResult>  {
     const isKo = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text); 
@@ -80,7 +86,7 @@ export class Translator {
             source: result.srcLangType,
             target: result.tarLangType,
             translatedText,
-            itemList: this.getItemList(text, translatedText, config)
+            itemList: this.getItemList(text, translatedText, config, isKo)
           };
         }),
         retry(2)
