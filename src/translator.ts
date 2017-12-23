@@ -9,58 +9,80 @@ import {
   QuickPickItem,
 } from 'vscode';
 import { josa } from 'josa'
-import {Observable} from "rxjs/Observable";
-import {pipe} from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
+import { pipe } from "rxjs/Rx";
 import { from } from "rxjs/observable/from";
 import { filter, map, mergeMap, retry } from "rxjs/operators";
+// import { forkJoin /*_throw*/ } from 'rxjs/observable';
+import "rxjs/add/observable/throw";
+import "rxjs/add/observable/forkJoin";
 
 export interface TranslatorResult {
   source: string,
   target: string,
   translatedText: string,
-  itemList: QuickPickItem[]
+  itemList?: QuickPickItem[]
 }
 
-export interface TranslatrRule {
+export interface TranslatorRule {
   prefix: string,
   description: string,
   antonymPrefix? : string,
   detail?: string
 }
 
+export interface TranslatorConfig {
+  type: string;
+  naver?: {
+    clientId: string;
+    clientSecret: string;
+  },
+  rules?: TranslatorRule[];
+}
+
 export class Translator {
   public get(text: string): Observable<TranslatorResult> {
     const config = workspace.getConfiguration("translator");
-    switch(config.type) {
-      default: 
-        return this.getNaverAPI(text, config);  
+    const hasProperty = Object.keys(config[config.type]).every(v => !!config[config.type][v]);
+    
+    if (hasProperty) {
+      const isKo = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+
+      return this[`${config.type}API`](text, config, isKo)
+        .pipe(
+          map((data: TranslatorResult) => {
+          data.itemList = this.getItemList(text, data.translatedText, config, text.split("\n").length > 1 ? false : isKo);
+            return data;
+          }),
+          retry(2)
+        );
+    } else {
+      // return _throw(`${type}의 API 정보를 입력해주세요`);
+      return Observable.throw(`${config.type}의 API 정보를 입력해주세요`);
     }
   }
   private getItemList(text: string, translatedText: string, config, isAddPrefixList): QuickPickItem[] {
-    const list = [{
+    const list: QuickPickItem[] = [{
         label: translatedText,
-        description: text,
-        detail: `Convert '${text}' to '${translatedText}'`,
+        description: "",
+        detail: text,
     }]
-
     if (isAddPrefixList) {
-      return list.concat(
-        config.rules.map((rule:TranslatrRule) => {
-          const item = {
-            label: `${rule.prefix}${translatedText}`,
-            description: josa(`${text.trim()}#{을} ${rule.description}`),
-            detail: rule.detail || "",
-          };
-          item.detail += rule.antonymPrefix ? `${item.detail ? " " : ""}[반대말] '${rule.antonymPrefix}${translatedText}'` : "";
-          return item;
-        )
-      );
+      const prefixList: QuickPickItem[] = config.rules.map((rule:TranslatorRule): QuickPickItem => {
+        const item: QuickPickItem = {
+          label: `${rule.prefix}${translatedText}`,
+          description: josa(`${text.trim()}#{을} ${rule.description}`),
+          detail: rule.detail || "",
+        };
+        item.detail += rule.antonymPrefix ? `${item.detail ? " " : ""}[반대말] '${rule.antonymPrefix}${translatedText}'` : "";
+        return item;
+      });
+      return list.concat(prefixList);
     } else {
       return list;
     }
   }
-  private getNaverAPI(text: string, config): Observable<TranslatorResult>  {
-    const isKo = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text); 
+  private naverAPI(text: string, config, isKo): Observable<TranslatorResult>  {
     const body = {
       source: isKo ? "ko" : "en",
       target: isKo ? "en" : "ko",
@@ -85,11 +107,9 @@ export class Translator {
           return {
             source: result.srcLangType,
             target: result.tarLangType,
-            translatedText,
-            itemList: this.getItemList(text, translatedText, config, isKo)
+            translatedText
           };
         }),
-        retry(2)
     );
   }
 }
