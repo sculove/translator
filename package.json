@@ -10,6 +10,13 @@
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "translator",
+        "translation",
+        "translate",
+        "korean"
+    ],
+    "icon": "images/translator.png",
     "activationEvents": [
         "onCommand:extension.translateForKorean"
     ],
