@@ -17,6 +17,15 @@
         "korean"
     ],
     "icon": "images/translator.png",
+    "bugs": {
+        "url": "https://github.com/sculove/translator/issues",
+        "email": "sculove@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sculove/translator.git"
+    },
+    "homepage": "https://github.com/sculove/translator/blob/master/README.md",
     "activationEvents": [
         "onCommand:extension.translateForKorean"
     ],
