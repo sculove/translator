@@ -12,8 +12,8 @@ A vscode plugin for Koreans that can help you write classes, variables, and func
   ![korToEn](https://github.com/sculove/translator/raw/master/images/korToEn.gif)
 
 > ### Shortcuts
-> - MacOS: `Cmd + Alt + 1`
-> - Window: `Ctrl + Alt + 1`
+> - MacOS: `Cmd + Alt + t`
+> - Window: `Ctrl + Alt + t`
 
 
 ## Requirements
