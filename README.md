@@ -25,7 +25,7 @@ NAVER API 키가 필요합니다. 향후 다른 `번역 API`도 추가할 예정
 ### Naver API
 - Free up to 10,000 per day  
   매일 10,000까지 무료
-- [NAVER API Registration Guide]((https://github.com/sculove/translator/wiki/Register-NAVER-API))  
+- [NAVER API Registration Guide](https://github.com/sculove/translator/wiki/Register-NAVER-API)  
   [NAVER API 등록 가이드](https://github.com/sculove/translator/wiki/Register-NAVER-API)
 
 
