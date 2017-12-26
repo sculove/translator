@@ -1,65 +1,66 @@
-# translator README
+# translator
 
-This is the README for your extension "translator". After writing up a brief description, we recommend including the following sections.
+A vscode plugin for Koreans that can help you write classes, variables, and function names.
+클래스, 변수 및 함수 이름을 작성할 때 한국사용자에게 도움을 주는 vscode 플러그인이다.
 
 ## Features
+- Translates English(Korean) into Korean(English)  
+  영어(한국어)를 한국어(영어)로 번역합니다.
+- Provides a method name with a prefix that can be applied to the translated text when you translate Korean.  
+  한국어를 번역 할 때, 번역 된 텍스트에 적용 할 수 있는 접두사가 있는 메서드 이름을 제공합니다.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+> ### Shortcuts
+> - MacOS: `Cmd + Alt + 1`
+> - Window: `Ctrl + Alt + 1`
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+You need NAVER API key. I have a plan that add some other `translate API` next time.  
+NAVER API 키가 필요합니다. 향후 다른 `번역 API`도 추가할 예정입니다.
+
+
+### Naver API
+- Free up to 10,000 per day  
+  매일 10,000까지 무료
+- [NAVER API Registration Guide]((https://github.com/sculove/translator/wiki/Register-NAVER-API))  
+  [NAVER API 등록 가이드](https://github.com/sculove/translator/wiki/Register-NAVER-API)
+
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+* `translator.naver.clientId`: Naver API ClientID
+* `translator.naver.clientSecret`: Naver API clientSecret
+* `translator.rules`: suggest prefix rules
 
-For example:
+```js
+  // ...
+  "translator.naver.clientId": "Naver API clientID",
+  "translator.naver.clientSecret": "Naver API clientSecret",
+  "translator.rules": [
+        {
+            "prefix": "create",
+            "description": "생성한다",
+            "detail": "기존에 없던 것을 창조한다.",
+            "antonymPrefix": "destroy"
+        },
+        {
+            "prefix": "make",
+            "description": "생성한다 ",
+            "detail": "기존에 있던 것에서 부가 자료를 생성한다."
+        },
+        {
+            "prefix": "destroy",
+            "description": "파괴한다. 자원을 해제한다.",
+            "antonymPrefix": "create"
+        }
+        // ...
+    ]
+```
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release of Translator.

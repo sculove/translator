@@ -1,13 +1,10 @@
 'use strict';
-import 'isomorphic-fetch';
+import "isomorphic-fetch";
 import {
     window as vswindow,
     commands,
     ExtensionContext,
-    TextDocument,
     Range,
-    workspace,
-    window,
     QuickPickItem,
     Selection,
 } from "vscode";
@@ -17,10 +14,8 @@ import { from } from "rxjs/observable/from";
 import { filter, map, mergeMap } from "rxjs/operators";
 import { Translator, TranslatorResult } from "./translator";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: ExtensionContext) {
-    const disposable = commands.registerCommand('extension.translateToKor', () => {
+    const disposable = commands.registerCommand('extension.translateForKorean', () => {
         const translator = new Translator();
         const editor = vswindow.activeTextEditor;
         if (!editor) {
@@ -41,9 +36,6 @@ export function activate(context: ExtensionContext) {
                 });
             }, err => vswindow.showErrorMessage(err));
     });
-
-
-    
 
     context.subscriptions.push(disposable);
 }

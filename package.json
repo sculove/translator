@@ -1,8 +1,8 @@
 {
     "name": "translator",
     "displayName": "translator",
-    "description": "",
-    "version": "0.0.1",
+    "description": "translate for Korean",
+    "version": "1.0.0",
     "publisher": "sculove",
     "engines": {
         "vscode": "^1.18.0"
@@ -11,7 +11,7 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.translateToKor"
+        "onCommand:extension.translateForKorean"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -149,25 +149,25 @@
         "menus": {
             "editor/context": [
                 {
-                    "command": "extension.translateToKor",
-                    "when": "editorTextFocus",
-                    "group": "transtor || editorHasSelection"
+                    "command": "extension.translateForKorean",
+                    "when": "editorHasSelection",
+                    "group": "transtor"
                 }
             ]
         },
         "commands": [
             {
-                "command": "extension.translateToKor",
-                "title": "Transform to Korean",
-                "when": "editorTextFocus || editorHasSelection"
+                "command": "extension.translateForKorean",
+                "title": "Translator",
+                "when": "editorHasSelection"
             }
         ],
         "keybindings": [
             {
-                "command": "extension.translateToKor",
-                "key": "ctrl+1",
-                "mac": "cmd+1",
-                "when": "editorTextFocus || editorHasSelection"
+                "command": "extension.translateForKorean",
+                "key": "ctrl+alt+t",
+                "mac": "cmd+alt+t",
+                "when": "editorHasSelection"
             }
         ]
     },
@@ -179,7 +179,7 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "@types/mocha": "^2.2.44",
+        "@types/mocha": "^2.2.45",
         "@types/node": "^8.5.2",
         "typescript": "^2.6.2",
         "vscode": "^1.1.10"
@@ -187,6 +187,6 @@
     "dependencies": {
         "isomorphic-fetch": "^2.2.1",
         "josa": "^3.0.1",
-        "rxjs": "^5.5.5"
+        "rxjs": "^5.5.6"
     }
 }
