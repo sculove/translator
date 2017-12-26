@@ -2,7 +2,7 @@
     "name": "translator",
     "displayName": "translator",
     "description": "translate for Korean",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "publisher": "sculove",
     "engines": {
         "vscode": "^1.18.0"
@@ -38,13 +38,14 @@
                     "translator.type": {
                         "type": "string",
                         "enum": [
+                            "google",
                             "naver"
                         ],
-                        "default": "naver",
-                        "description": "사용할 번역 API 를 등록해주세요 (naver)"
+                        "default": "google",
+                        "description": "사용할 번역 API 를 등록해주세요 (google, naver)"
                     },
                     "translator.naver": {
-                        "type": "object | null",
+                        "type": "object",
                         "default": {
                             "clientId": null,
                             "clientSecret": null
@@ -181,8 +182,8 @@
         "keybindings": [
             {
                 "command": "extension.translateForKorean",
-                "key": "ctrl+alt+t",
-                "mac": "cmd+alt+t",
+                "key": "ctrl+shift+t",
+                "mac": "cmd+shift+t",
                 "when": "editorHasSelection"
             }
         ]

@@ -12,15 +12,16 @@ A vscode plugin for Koreans that can help you write classes, variables, and func
   ![korToEn](https://github.com/sculove/translator/raw/master/images/korToEn.gif)
 
 > ### Shortcuts
-> - MacOS: `Cmd + Alt + t`
-> - Window: `Ctrl + Alt + t`
+> - MacOS: `Cmd + shift + t`
+> - Window: `Ctrl + shift + t`
 
+## Translate API
 
-## Requirements
+You can use limited Google Translate API. (default)   
+제한된 Google 번역 API를 사용할 수 있습니다. (default)
 
-You need NAVER API key. I have a plan that add some other `translate API` next time.  
-NAVER API 키가 필요합니다. 향후 다른 `번역 API`도 추가할 예정입니다.
-
+If you want to use Papago Translate API of NAVER, you need NAVER API key.  
+만약 네이버의 `파파고 API`를 사용하고자 한다면, NAVER API 키가 필요합니다.
 
 ### Naver API
 - Free up to 10,000 per day  
@@ -31,14 +32,13 @@ NAVER API 키가 필요합니다. 향후 다른 `번역 API`도 추가할 예정
 
 ## Extension Settings
 
+* `translator.type`: translate API type (google, naver). default is google
+* `translator.rules`: suggest prefix rules
 * `translator.naver.clientId`: Naver API ClientID
 * `translator.naver.clientSecret`: Naver API clientSecret
-* `translator.rules`: suggest prefix rules
 
 ```js
   // ...
-  "translator.naver.clientId": "Naver API clientID",
-  "translator.naver.clientSecret": "Naver API clientSecret",
   "translator.rules": [
         {
             "prefix": "create",
@@ -58,10 +58,18 @@ NAVER API 키가 필요합니다. 향후 다른 `번역 API`도 추가할 예정
         }
         // ...
     ]
+    "translator.naver.clientId": "Naver API clientID",
+    "translator.naver.clientSecret": "Naver API clientSecret",
 ```
 
 
 ## Release Notes
+
+### 1.1.0
+
+- add google translate API (default)
+- change shortcut from `cmd + alt + t` to `cmd + shift + t` on MacOS
+- change shortcut from `ctrl + alt + t` to `ctrl + shift + t` on Window
 
 ### 1.0.0
 

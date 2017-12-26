@@ -38,8 +38,8 @@ export interface TranslatorConfig {
 export class Translator {
   public get(text: string): Observable<TranslatorResult> {
     const config = workspace.getConfiguration("translator");
-    const hasProperty = Object.keys(config[config.type]).every(v => !!config[config.type][v]);
-    
+    const apiConfig = config[config.type];
+    const hasProperty = !apiConfig || Object.keys(apiConfig).every(v => !!apiConfig[v]);
     if (hasProperty) {
       const isKo = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
       
@@ -76,6 +76,24 @@ export class Translator {
     } else {
       return list;
     }
+  }
+
+  private googleAPI(text: string, config, isKo): Observable<TranslatorResult> {
+    const source = isKo ? "ko" : "en";
+    const target = isKo ? "en" : "ko";
+    const url = `https://translate.google.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&dt=bd&ie=UTF-8&oe=UTF-8&dj=1&source=icon&q=${encodeURI(text)}`;
+
+    return from(fetch(url))
+      .pipe(
+        filter((res: Response) => res.ok),
+        mergeMap((res: Response) => from(res.json())),
+        map(msg => ({
+            source,
+            target,
+            translatedText: msg.sentences.map(v => v.trans).join("")
+          })
+        ),
+      );
   }
 
   private naverAPI(text: string, config, isKo): Observable<TranslatorResult>  {
