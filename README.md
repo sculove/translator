@@ -1,13 +1,15 @@
 # translator
 
-A vscode plugin for Koreans that can help you write classes, variables, and function names.
+A vscode plugin for Koreans that can help you write classes, variables, and function names.  
 클래스, 변수 및 함수 이름을 작성할 때 한국사용자에게 도움을 주는 vscode 플러그인이다.
 
 ## Features
 - Translates English(Korean) into Korean(English)  
   영어(한국어)를 한국어(영어)로 번역합니다.
+  ![enToKor](https://github.com/sculove/translator/raw/master/images/enToKor.gif)
 - Provides a method name with a prefix that can be applied to the translated text when you translate Korean.  
   한국어를 번역 할 때, 번역 된 텍스트에 적용 할 수 있는 접두사가 있는 메서드 이름을 제공합니다.
+  ![korToEn](https://github.com/sculove/translator/raw/master/images/korToEn.gif)
 
 > ### Shortcuts
 > - MacOS: `Cmd + Alt + 1`
